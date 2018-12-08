@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title><%= yield(:title) %> | Enlighten your soul</title>
+      <%= csrf_meta_tags %>
+      <%= csp_meta_tag %>
+    
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+      
+      <header class="headSec">
+          <ul>
+            <li><%=link_to "Home", home_path %></li>
+            <li><%=link_to "Books", items_path %></li>
+            <li><%=link_to "About us", about_path %></li>
+            <li><%=link_to "Contact us", contact_path %></li>
+            <li><%=link_to "FAQ's", faq_path %></li>
+            
+            <% if user_signed_in? %>
+            <li><a href="#">Welcome, <%= current_user.email %></a></li>
+            <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
+            <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+            <% else %>
+            <li><%= link_to 'Register', new_user_registration_path %></li>
+            <li><%= link_to 'Sign in', new_user_session_path %></li>
+            <% end %>
+            
+            <% if session[:login] == 1 %>
+            <li><%=link_to "Admin Logout", logout_path %></li>
+            <% else %>
+            <li><%=link_to "Admin Login", login_path %></li>
+            <% end %>
+            
+            <li><%=link_to "Cart", cart_path %></li>
+          </ul>
+          <%=render 'layouts/search'%>
+      </header>
+      
+  </head>
+
+    <div class="container">
+      <%=yield %>
+    </div>
+  
+    <footer class="footer">
+        <p>The Lantern Center - 15, Synge Street, Dublin 8 - Ireland</p>
+        <p>spiritismireland@gmail.com</p>
+        <p>&copy;2018 Spiritism Society of Ireland</p>
+      </footer>
+  
+</html>

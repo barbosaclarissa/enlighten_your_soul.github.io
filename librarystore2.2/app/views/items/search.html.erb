@@ -1,0 +1,33 @@
+<h2>You searched for <%= @search_term %></h2>
+
+<% if @items.length == 0 %>
+<br/>
+<h2>We are sorry. No books were found to match your search.</h2>
+<% end %>
+
+<table class="catalog">
+    <% @items.each do |item| %>
+    <tr>
+        <td>
+            <div class="title">
+                <%= link_to item.title, item %>
+            </div>
+            <div class="synopsis">
+                <%= item.synopsis %>
+            </div>
+            <div class="price">
+                <%= number_to_currency(item.price, :unit => "€") %>
+            </div>
+            <div class="links">
+                <% if user_signed_in? %>
+                <%= link_to 'Edit', edit_item_path(item) %>
+                <%= link_to 'Delete', item, method: :delete, data: { confirm: 'Do you want to delete this item?' } %>
+                <% else %>
+                
+                <a href="/cart/<%= item.id %>">Add to Cart</a>
+                <% end %>
+            </div>
+        </td>
+    </tr>
+    <% end %>
+</table>
